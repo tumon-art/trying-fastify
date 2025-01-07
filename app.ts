@@ -16,17 +16,32 @@ fastify.get(
   }
 );
 
+fastify.addSchema({
+  $id: "getuser",
+  type: "object",
+  required: ["name"],
+  properties: {
+    name: {
+      type: "string",
+    },
+  },
+})
 fastify.post(
-  "/user",
-  async function handler(
-    request: FastifyRequest<{
-      Body: { name: string; age: string };
-    }>,
-    reply: FastifyReply
-  ) {
-    const user = request.body;
-    return reply.code(201).send(user);
+  "/user", {
+  schema: {
+    body: {
+      $ref: "getuser#"
+    }
   }
+}, async function handler(
+  request: FastifyRequest<{
+    Body: { name: string; age: string };
+  }>,
+  reply: FastifyReply
+) {
+  const user = request.body;
+  return reply.code(201).send(user);
+}
 );
 
 const followers = async (fastify: FastifyInstance) => {
