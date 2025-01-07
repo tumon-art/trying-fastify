@@ -1,4 +1,4 @@
-import Fastify, { FastifyReply, FastifyRequest } from "fastify";
+import Fastify, { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
 const fastify = Fastify({
   logger: {
@@ -28,6 +28,18 @@ fastify.post(
     return reply.code(201).send(user);
   }
 );
+
+const followers = async (fastify: FastifyInstance) => {
+  fastify.get(
+    "/",
+    async function handler(request: FastifyRequest, reply: FastifyReply) {
+      return ["Rolando", "Messi", "Tumon"];
+    }
+  );
+
+}
+
+fastify.register(followers, { prefix: "/api/getfollowers" })
 
 // Run the server!
 const run = async () => {
