@@ -26,6 +26,7 @@ fastify.addSchema({
     },
   },
 })
+
 fastify.post(
   "/user", {
   schema: {
